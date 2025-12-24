@@ -1,35 +1,48 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Routes, Route, Link } from "react-router-dom";
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import Users from "./pages/Users";
+import UserProfile from "./pages/UserProfile";
 
-function App() {
-  const [count, setCount] = useState(0)
-
+export default function App() {
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div className="min-h-screen p-6">
+      <nav className="flex flex-wrap gap-4 mb-6">
+        <Link className="underline text-blue-600" to="/">
+          Home
+        </Link>
+        <Link className="underline text-blue-600" to="/login">
+          Login
+        </Link>
+        <Link className="underline text-blue-600" to="/register">
+          Register
+        </Link>
+        <Link className="underline text-blue-600" to="/users">
+          Users
+        </Link>
+        <Link className="underline text-blue-600" to="/users/1">
+          User 1
+        </Link>
+      </nav>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/users/:id" element={<UserProfile />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
+  );
 }
 
-export default App
+function NotFound() {
+  return (
+    <div className="p-6 border rounded-lg">
+      <h1 className="text-2xl font-bold">404</h1>
+      <p className="mt-2">Page not found</p>
+    </div>
+  );
+}
