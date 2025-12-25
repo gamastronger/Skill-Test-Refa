@@ -66,7 +66,7 @@ export default function UserProfile() {
 
     return (
     <div className="p-8 max-w-4xl mx-auto border rounded-xl shadow-sm bg-white">
-      {/* Header Section dengan Role Badge */}
+      
       <div className="flex items-center gap-6 pb-6 border-b">
         <img
           src={user.image}
@@ -86,9 +86,9 @@ export default function UserProfile() {
         </div>
       </div>
 
-      {/* Grid Detail Data */}
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
-        {/* Kolom Kontak */}
+       
         <section>
           <h2 className="text-sm font-bold text-gray-400 uppercase mb-4">Contact Info</h2>
           <div className="space-y-3">
@@ -98,7 +98,7 @@ export default function UserProfile() {
           </div>
         </section>
 
-        {/* Kolom Pekerjaan */}
+        
         <section>
           <h2 className="text-sm font-bold text-gray-400 uppercase mb-4">Professional</h2>
           <div className="p-4 bg-gray-50 rounded-lg">

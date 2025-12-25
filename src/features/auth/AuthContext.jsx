@@ -1,4 +1,3 @@
-// src/features/auth/AuthContext.jsx
 import { useEffect, useMemo, useReducer, useCallback } from "react";
 import authService from "./authService";
 import { AuthContext, authReducer, initialAuthState } from "./AuthCore";
