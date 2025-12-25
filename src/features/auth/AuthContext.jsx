@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useReducer, useCallback } from "react";
 import authService from "./authService";
 import { AuthContext, authReducer, initialAuthState } from "./AuthCore";
+import { updateUser as updateUserService } from "../../services/dummyjson";
 
 export function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(authReducer, initialAuthState);
@@ -50,6 +51,28 @@ export function AuthProvider({ children }) {
     dispatch({ type: "LOGOUT" });
   }, []);
 
+  const updateProfile = useCallback(async (updates) => {
+    const id = state?.user?.id;
+    if (!id) return { ok: false, error: "No authenticated user" };
+    dispatch({ type: "PROFILE_UPDATE_START" });
+    try {
+      const updated = await updateUserService(id, updates);
+      const base = state.user || {};
+      const merged = {
+        ...base,
+        ...updated,
+        address: { ...(base.address || {}), ...(updated.address || {}) },
+        company: { ...(base.company || {}), ...(updated.company || {}) },
+      };
+      dispatch({ type: "PROFILE_UPDATE_SUCCESS", payload: { user: merged } });
+      return { ok: true, user: updated };
+    } catch (e) {
+      const message = e?.message || "Profile update failed";
+      dispatch({ type: "PROFILE_UPDATE_ERROR", payload: message });
+      return { ok: false, error: message };
+    }
+  }, [state?.user?.id]);
+
   const value = useMemo(
     () => ({
       user: state.user,
@@ -59,8 +82,9 @@ export function AuthProvider({ children }) {
       error: state.error,
       login,
       logout,
+      updateProfile,
     }),
-    [state, login, logout]
+    [state, login, logout, updateProfile]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

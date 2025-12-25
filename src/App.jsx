@@ -17,11 +17,12 @@ export default function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-         <Route element={<ProtectedRoute />}>
+        <Route element={<ProtectedRoute />}>
           <Route path="/users" element={<Users />} />
           <Route path="/users/:id" element={<UserProfile />} />
+          <Route path="/profile" element={<UserProfile />} />
         </Route>
-        
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

@@ -47,6 +47,16 @@ export function authReducer(state, action) {
     case "LOGOUT":
       return { ...initialAuthState, loading: false };
 
+    // Profile update lifecycle
+    case "PROFILE_UPDATE_START":
+      return { ...state, loading: true, error: null };
+
+    case "PROFILE_UPDATE_SUCCESS":
+      return { ...state, user: action.payload.user, loading: false, error: null };
+
+    case "PROFILE_UPDATE_ERROR":
+      return { ...state, loading: false, error: action.payload };
+
     default:
       return state;
   }
