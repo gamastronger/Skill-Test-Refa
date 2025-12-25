@@ -17,7 +17,10 @@ export function clearToken() {
 export async function login({ username, password }) {
   if (!username || !password) throw new Error("Username and password are required");
   const data = await api.post("/auth/login", { username, password });
-  if (data?.token) setToken(data.token);
+
+  const token = data?.token || data?.accessToken;
+  if (token) setToken(token);
+
   return data;
 }
 

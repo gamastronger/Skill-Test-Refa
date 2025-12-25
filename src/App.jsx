@@ -5,6 +5,7 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import Users from "./pages/Users";
 import UserProfile from "./pages/UserProfile";
+import ProtectedRoute from "./features/auth/ProtectedRoute";
 
 export default function App() {
   return (
@@ -15,8 +16,12 @@ export default function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/users" element={<Users />} />
-        <Route path="/users/:id" element={<UserProfile />} />
+
+         <Route element={<ProtectedRoute />}>
+          <Route path="/users" element={<Users />} />
+          <Route path="/users/:id" element={<UserProfile />} />
+        </Route>
+        
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
