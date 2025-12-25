@@ -2,6 +2,7 @@ import { useEffect, useMemo, useReducer, useCallback } from "react";
 import authService from "./authService";
 import { AuthContext, authReducer, initialAuthState } from "./AuthCore";
 import { updateUser as updateUserService } from "../../services/dummyjson";
+import { deleteUser as deleteUserService } from "../../services/dummyjson";
 
 export function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(authReducer, initialAuthState);
@@ -83,6 +84,16 @@ export function AuthProvider({ children }) {
       login,
       logout,
       updateProfile,
+      async deleteSelf() {
+        const id = state?.user?.id;
+        if (!id) return { ok: false, error: "No authenticated user" };
+        try {
+          await deleteUserService(id);
+        } catch {}
+        authService.logout();
+        dispatch({ type: "LOGOUT" });
+        return { ok: true };
+      },
     }),
     [state, login, logout, updateProfile]
   );
