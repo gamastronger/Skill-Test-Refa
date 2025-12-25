@@ -185,13 +185,24 @@ export default function EditProfileForm({ user, onSave, onCancel }) {
       </div>
 
       <div className="pt-4 flex gap-3">
-        <button className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition" type="submit">
+        <button
+          type="submit"
+          className={
+            "inline-flex items-center justify-center rounded-xl px-4 py-2.5 text-sm font-medium transition " +
+            "focus:outline-none focus-visible:ring-4 disabled:opacity-50 disabled:cursor-not-allowed " +
+            "bg-slate-900 text-white shadow-sm hover:bg-slate-800 focus-visible:ring-slate-900/15"
+          }
+        >
           Save
         </button>
         <button
-          className="px-4 py-2 bg-gray-100 hover:bg-gray-200 rounded-md transition"
           type="button"
           onClick={onCancel}
+          className={
+            "inline-flex items-center justify-center rounded-xl px-4 py-2.5 text-sm font-medium transition " +
+            "focus:outline-none focus-visible:ring-4 disabled:opacity-50 disabled:cursor-not-allowed " +
+            "text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50 focus-visible:ring-slate-900/10"
+          }
         >
           Cancel
         </button>
