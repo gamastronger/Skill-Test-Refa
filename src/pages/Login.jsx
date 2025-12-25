@@ -18,6 +18,8 @@ export default function Login() {
       setLoading(true);
       setError(null);
       await login(form);
+      const token = localStorage.getItem("token");
+      if (!token) throw new Error("Token not saved");
       navigate("/users");
     } catch (err) {
       setError(err.message || "Login failed");
