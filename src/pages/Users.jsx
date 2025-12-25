@@ -13,11 +13,11 @@ function Button({ as = "button", variant = "secondary", className, ...props }) {
 
   const styles = {
     primary:
-      "bg-slate-900 text-white shadow-sm hover:bg-slate-800 focus-visible:ring-slate-900/15",
+      "bg-[#1C4D8D] text-white shadow-sm hover:bg-slate-800 focus-visible:ring-slate-900/15",
     secondary:
       "text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50 focus-visible:ring-slate-900/10",
     success:
-      "bg-black text-white shadow-sm hover:bg-emerald-700 focus-visible:ring-emerald-600/15",
+      "bg-[#1C4D8D] text-white shadow-sm hover:bg-[#0F2854] focus-visible:ring-emerald-600/15",
     danger:
       "bg-red-600 text-white shadow-sm hover:bg-red-700 focus-visible:ring-red-600/15",
     ghost:

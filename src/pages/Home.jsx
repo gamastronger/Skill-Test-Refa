@@ -45,7 +45,7 @@ function Button({ as = "button", variant = "secondary", className, ...props }) {
 
   const styles = {
     primary:
-      "bg-slate-900 text-white shadow-sm hover:bg-slate-800 focus-visible:ring-slate-900/15",
+      "bg-[#1C4D8D] text-white shadow-sm hover:bg-slate-800 focus-visible:ring-slate-900/15",
     secondary:
       "text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50 focus-visible:ring-slate-900/10",
     danger:

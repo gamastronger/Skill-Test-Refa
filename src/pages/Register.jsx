@@ -123,7 +123,7 @@ export default function Register() {
                   id="terms"
                   checked={agreeToTerms}
                   onChange={(e) => setAgreeToTerms(e.target.checked)}
-                  className="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-slate-300 bg-slate-50 transition-all checked:bg-slate-900 checked:border-slate-900"
+                  className="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-slate-300 bg-slate-50 transition-all checked:bg-[#1C4D8D] checked:border-[#1C4D8D]"
                 />
                 <Check 
                   className="absolute h-3.5 w-3.5 text-white opacity-0 peer-checked:opacity-100 pointer-events-none left-0.5" 
@@ -146,7 +146,7 @@ export default function Register() {
             <button
               type="submit"
               disabled={!isFormValid}
-              className="w-full rounded-xl bg-slate-900 px-4 py-3.5 text-sm font-bold text-white shadow-lg shadow-slate-200 transition-all hover:bg-slate-800 active:scale-[0.98] disabled:opacity-40 disabled:pointer-events-none"
+              className="w-full rounded-xl bg-[#1C4D8D] px-4 py-3.5 text-sm font-bold text-white shadow-lg shadow-slate-200 transition-all hover:bg-[#0F2854] active:scale-[0.98] disabled:opacity-40 disabled:pointer-events-none"
             >
               Buat Akun Sekarang
             </button>

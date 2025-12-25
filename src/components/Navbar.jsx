@@ -10,7 +10,7 @@ export default function Navbar() {
       "inline-flex items-center rounded-xl px-3 py-2 text-sm font-medium transition",
       "focus:outline-none focus-visible:ring-4 focus-visible:ring-slate-900/10",
       isActive
-        ? "bg-slate-900 text-white shadow-sm"
+        ? "bg-[#1C4D8D] text-white shadow-sm"
         : "text-slate-600 hover:text-slate-900 hover:bg-slate-100/70"
     );
 
@@ -51,7 +51,7 @@ export default function Navbar() {
             Register
           </NavLink>
         
-          <div className="mx-2 hidden h-6 w-px bg-slate-200 sm:block" />
+          {/* <div className="mx-2 hidden h-6 w-px bg-slate-200 sm:block" />
 
           <Link
             to="/users/1"
@@ -62,7 +62,7 @@ export default function Navbar() {
             )}
           >
             User #1
-          </Link>
+          </Link> */}
         </div>
       </nav>
     </header>

@@ -106,8 +106,8 @@ export default function Login() {
             <button
               type="submit"
               disabled={loading || !form.username || !form.password}
-              className="w-full inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition
-                         hover:bg-slate-800
+              className="w-full inline-flex items-center justify-center rounded-xl bg-[#1C4D8D] px-4 py-2.5 text-sm font-medium text-white shadow-sm transition
+                         hover:bg-[#163F6D]
                          focus:outline-none focus:ring-4 focus:ring-slate-900/15
                          disabled:opacity-50 disabled:cursor-not-allowed"
             >
