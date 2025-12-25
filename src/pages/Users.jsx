@@ -65,6 +65,15 @@ export default function Users() {
         {users.map((user) => (
           <li key={user.id} className="py-3 flex justify-between items-center">
             <div>
+              <img
+                src={user.image}
+                alt={`${user.firstName} ${user.lastName}`}
+                className="w-20 h-20 rounded-full border object-cover"
+                referrerPolicy="no-referrer"
+                onError={(e) => {
+                  e.currentTarget.src = "https://dummyjson.com/icon/512x512.png";
+                }}
+              />
               <p className="font-semibold">
                 {user.firstName} {user.lastName}
               </p>

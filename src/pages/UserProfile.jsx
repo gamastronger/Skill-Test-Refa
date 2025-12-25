@@ -66,9 +66,24 @@ export default function UserProfile() {
 
   return (
     <div className="p-6 border rounded-lg">
-      <h1 className="text-2xl font-bold">
-        {user.firstName} {user.lastName}
-      </h1>
+      <div className="flex items-center gap-4">
+        <img
+          src={user.image}
+          alt={`${user.firstName} ${user.lastName}`}
+          className="w-20 h-20 rounded-full border object-cover"
+          referrerPolicy="no-referrer"
+          onError={(e) => {
+            e.currentTarget.src = "https://dummyjson.com/icon/512x512.png";
+          }}
+        />
+
+        <div>
+          <h1 className="text-2xl font-bold">
+            {user.firstName} {user.lastName}
+          </h1>
+          <p className="text-sm text-gray-500">@{user.username}</p>
+        </div>
+      </div>
 
       <div className="mt-4 space-y-2">
         <p>
