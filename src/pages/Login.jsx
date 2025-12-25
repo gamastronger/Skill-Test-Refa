@@ -38,8 +38,12 @@ export default function Login() {
       <div className="w-full max-w-md">
         {/* Brand / Header */}
         <div className="mb-6 text-center">
-          <div className="mx-auto mb-4 h-11 w-11 rounded-2xl bg-slate-900 text-white grid place-items-center shadow-sm">
-            <span className="text-sm font-semibold tracking-tight">N</span>
+          <div className="mb-4 grid h-12 w-12 place-items-center rounded-2xl bg-white shadow-sm ring-1 ring-slate-900/10 mx-auto">
+            <img
+              src="/bee.png"
+              alt="Mini Project logo"
+              className="h-5 w-5 object-contain"
+            />
           </div>
           <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
             Welcome back
@@ -135,7 +139,7 @@ export default function Login() {
               onClick={() => navigate("/")}
               className="text-sm font-medium text-slate-700 hover:text-slate-900 transition"
             >
-              ← Back to Home
+              Back to Home
             </button>
           </div>
         </div>

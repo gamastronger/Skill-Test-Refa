@@ -131,7 +131,7 @@ export default function UserProfile() {
           </div>
           <div className="mt-6">
             <Button as={Link} to="/users" variant="secondary">
-              ← Back to Users
+              Back to Users
             </Button>
           </div>
         </div>
@@ -304,7 +304,7 @@ export default function UserProfile() {
         <div className="rounded-2xl bg-white ring-1 ring-black/5 shadow-sm p-4">
           <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
             <Button as={Link} to={backHref} variant="secondary">
-              ← Back
+              Back
             </Button>
 
             <Button as={Link} to={rightHref} variant="secondary">

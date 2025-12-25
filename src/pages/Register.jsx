@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { Eye, EyeOff, Check } from "lucide-react";
 
 export default function Register() {
   const navigate = useNavigate();
@@ -9,6 +10,9 @@ export default function Register() {
     password: "",
     confirmPassword: "",
   });
+  
+  const [showPassword, setShowPassword] = useState(false);
+  const [agreeToTerms, setAgreeToTerms] = useState(false);
   const [error, setError] = useState(null);
 
   function handleChange(e) {
@@ -19,121 +23,139 @@ export default function Register() {
     e.preventDefault();
 
     if (!form.username || !form.password || !form.confirmPassword) {
-      setError("All fields are required.");
+      setError("Semua field wajib diisi.");
       return;
     }
 
     if (form.password !== form.confirmPassword) {
-      setError("Password confirmation does not match.");
+      setError("Konfirmasi password tidak cocok.");
+      return;
+    }
+
+    if (!agreeToTerms) {
+      setError("Anda harus menyetujui Kebijakan Privasi.");
       return;
     }
 
     setError(null);
+    console.log("Registering with:", form);
     navigate("/login");
   }
 
+  const isFormValid = form.username && form.password && form.confirmPassword && agreeToTerms;
+
   return (
-    <div className="min-h-screen bg-slate-50 px-4 py-10 grid place-items-center">
+    <div className="min-h-screen bg-slate-50 px-4 py-10 grid place-items-center font-sans text-slate-900">
       <div className="w-full max-w-md">
         {/* Header */}
-        <div className="mb-6 text-center">
-          <div className="mx-auto mb-4 h-11 w-11 rounded-2xl bg-slate-900 text-white grid place-items-center shadow-sm">
-            <span className="text-sm font-semibold tracking-tight">N</span>
+        <div className="mb-8 text-center">
+          <div className="mx-auto mb-4 h-14 w-14 rounded-2xl bg-white shadow-sm ring-1 ring-slate-200 grid place-items-center">
+            {/* Menggunakan path absolut ke folder public */}
+            <img src="/bee.png" alt="Bee Logo" className="h-8 w-8 object-contain" />
           </div>
-          <h1 className="text-2xl font-semibold tracking-tight text-slate-900">
-            Create an account
+          <h1 className="text-2xl font-bold tracking-tight text-slate-900">
+            Daftar Akun Baru
           </h1>
-          <p className="mt-1 text-sm text-slate-600">
-            Join us. Keep things simple and secure.
+          <p className="mt-1.5 text-sm text-slate-500">
+            Bergabunglah dengan komunitas efisien kami.
           </p>
         </div>
 
-        {/* Card */}
-        <div className="rounded-2xl bg-white ring-1 ring-black/5 shadow-sm overflow-hidden">
-          <form className="p-6 space-y-4" onSubmit={handleSubmit}>
+        {/* Form Card */}
+        <div className="rounded-3xl bg-white ring-1 ring-slate-200 shadow-xl shadow-slate-200/50 overflow-hidden">
+          <form className="p-8 space-y-5" onSubmit={handleSubmit}>
+            
             {/* Username */}
-            <div>
-              <label className="block text-sm font-medium text-slate-700">
-                Username
-              </label>
+            <div className="space-y-1.5">
+              <label className="text-sm font-semibold text-slate-700">Username</label>
               <input
                 name="username"
+                autoComplete="username"
                 value={form.username}
                 onChange={handleChange}
-                placeholder="yourusername"
-                autoComplete="username"
-                className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition
-                           placeholder:text-slate-400
-                           focus:border-slate-900 focus:ring-4 focus:ring-slate-900/10"
+                placeholder="cth: johndoe"
+                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm transition-all focus:bg-white focus:border-slate-900 focus:ring-4 focus:ring-slate-900/5 outline-none"
               />
             </div>
 
-            {/* Password */}
-            <div>
-              <label className="block text-sm font-medium text-slate-700">
-                Password
-              </label>
-              <input
-                type="password"
-                name="password"
-                value={form.password}
-                onChange={handleChange}
-                placeholder="••••••••"
-                autoComplete="new-password"
-                className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition
-                           placeholder:text-slate-400
-                           focus:border-slate-900 focus:ring-4 focus:ring-slate-900/10"
-              />
-              <p className="mt-1 text-xs text-slate-500">
-                Minimum 8 characters recommended.
-              </p>
+            {/* Password Field */}
+            <div className="space-y-1.5">
+              <label className="text-sm font-semibold text-slate-700">Password</label>
+              <div className="relative">
+                <input
+                  type={showPassword ? "text" : "password"}
+                  name="password"
+                  autoComplete="new-password"
+                  value={form.password}
+                  onChange={handleChange}
+                  placeholder="••••••••"
+                  className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm transition-all focus:bg-white focus:border-slate-900 focus:ring-4 focus:ring-slate-900/5 outline-none"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 transition p-1"
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
             </div>
 
-            {/* Confirm Password */}
-            <div>
-              <label className="block text-sm font-medium text-slate-700">
-                Confirm password
-              </label>
+            {/* Confirm Password Field */}
+            <div className="space-y-1.5">
+              <label className="text-sm font-semibold text-slate-700">Konfirmasi Password</label>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 name="confirmPassword"
+                autoComplete="new-password"
                 value={form.confirmPassword}
                 onChange={handleChange}
                 placeholder="••••••••"
-                autoComplete="new-password"
-                className="mt-2 w-full rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm text-slate-900 shadow-sm outline-none transition
-                           placeholder:text-slate-400
-                           focus:border-slate-900 focus:ring-4 focus:ring-slate-900/10"
+                className="w-full rounded-xl border border-slate-200 bg-slate-50 px-4 py-3 text-sm transition-all focus:bg-white focus:border-slate-900 focus:ring-4 focus:ring-slate-900/5 outline-none"
               />
             </div>
 
-            {/* Error */}
+            {/* Privacy Checkbox - Custom Styled */}
+            <div className="flex items-start space-x-3 pt-2">
+              <div className="relative flex items-center mt-0.5">
+                <input
+                  type="checkbox"
+                  id="terms"
+                  checked={agreeToTerms}
+                  onChange={(e) => setAgreeToTerms(e.target.checked)}
+                  className="peer h-5 w-5 cursor-pointer appearance-none rounded-md border border-slate-300 bg-slate-50 transition-all checked:bg-slate-900 checked:border-slate-900"
+                />
+                <Check 
+                  className="absolute h-3.5 w-3.5 text-white opacity-0 peer-checked:opacity-100 pointer-events-none left-0.5" 
+                  strokeWidth={4} 
+                />
+              </div>
+              <label htmlFor="terms" className="text-[11px] sm:text-xs leading-tight text-slate-500 cursor-pointer select-none">
+                Dengan mendaftar, saya menyetujui <Link to="/terms" className="text-slate-900 font-bold hover:underline">Syarat & Ketentuan</Link> serta <Link to="/privacy" className="text-slate-900 font-bold hover:underline">Kebijakan Privasi</Link>.
+              </label>
+            </div>
+
+            {/* Error Message */}
             {error && (
-              <div className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
+              <div className="rounded-xl border border-red-100 bg-red-50 p-3 text-xs font-semibold text-red-600 animate-in fade-in duration-300">
                 {error}
               </div>
             )}
 
-            {/* Submit */}
+            {/* Submit Button */}
             <button
               type="submit"
-              disabled={!form.username || !form.password || !form.confirmPassword}
-              className="w-full inline-flex items-center justify-center rounded-xl bg-slate-900 px-4 py-2.5 text-sm font-medium text-white shadow-sm transition
-                         hover:bg-slate-800
-                         focus:outline-none focus:ring-4 focus:ring-slate-900/15
-                         disabled:opacity-50 disabled:cursor-not-allowed"
+              disabled={!isFormValid}
+              className="w-full rounded-xl bg-slate-900 px-4 py-3.5 text-sm font-bold text-white shadow-lg shadow-slate-200 transition-all hover:bg-slate-800 active:scale-[0.98] disabled:opacity-40 disabled:pointer-events-none"
             >
-              Create account
+              Buat Akun Sekarang
             </button>
 
-            {/* Footer */}
-            <p className="pt-2 text-center text-xs text-slate-500">
-              Already have an account?{" "}
-              <Link
-                to="/login"
-                className="font-medium text-slate-700 hover:text-slate-900 transition"
-              >
-                Sign in
+            {/* Login Link */}
+            <p className="text-center text-sm text-slate-500">
+              Sudah punya akun?{" "}
+              <Link to="/login" className="font-bold text-slate-900 hover:underline">
+                Masuk di sini
               </Link>
             </p>
           </form>

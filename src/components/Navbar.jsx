@@ -23,11 +23,16 @@ export default function Navbar() {
           aria-label="Go to home"
           className="inline-flex items-center gap-3 rounded-xl px-2 py-2 transition hover:bg-slate-100/70"
         >
-          <span className="grid h-9 w-9 place-items-center rounded-2xl bg-slate-900 text-white shadow-sm">
-            <span className="text-sm font-semibold">N</span>
+          <span className="grid h-9 w-9 place-items-center rounded-2xl bg-white shadow-sm ring-1 ring-slate-900/10">
+            <img
+              src="/bee.png"
+              alt="Mini Project logo"
+              className="h-5 w-5 object-contain"
+            />
           </span>
+
           <span className="text-sm font-semibold tracking-tight text-slate-900">
-            MyApp
+            Mini Project Web App
           </span>
         </Link>
 
@@ -45,11 +50,9 @@ export default function Navbar() {
           <NavLink className={navItem} to="/register">
             Register
           </NavLink>
-
-          {/* subtle divider */}
+        
           <div className="mx-2 hidden h-6 w-px bg-slate-200 sm:block" />
 
-          {/* Secondary link */}
           <Link
             to="/users/1"
             className={cx(
