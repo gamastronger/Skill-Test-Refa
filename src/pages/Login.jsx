@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { login } from "../features/auth/authService";
+// import { login } from "../features/auth/authService";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../features/auth/useAuth";
 
 export default function Login() {
   const navigate = useNavigate();
+  const { login } = useAuth();
   const [form, setForm] = useState({ username: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);

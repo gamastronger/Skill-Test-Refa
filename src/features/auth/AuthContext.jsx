@@ -1,78 +1,68 @@
-import { useEffect, useCallback, useState } from 'react'
-import { AuthContext } from './AuthCore.js'
-import { login as loginApi, register as registerApi, logout as logoutApi, getMe, getStoredUser } from './authService.js'
-
+// src/features/auth/AuthContext.jsx
+import { useEffect, useMemo, useReducer, useCallback } from "react";
+import authService from "./authService";
+import { AuthContext, authReducer, initialAuthState } from "./AuthCore";
 
 export function AuthProvider({ children }) {
-  const [token, setToken] = useState(() => localStorage.getItem('token'))
-  const [user, setUser] = useState(() => getStoredUser())
-  // Derive initial loading from presence of token to avoid synchronous setState in effect
-  const [loading, setLoading] = useState(() => !!localStorage.getItem('token'))
-  const isAuthenticated = !!token
+  const [state, dispatch] = useReducer(authReducer, initialAuthState);
 
   useEffect(() => {
+    let cancelled = false;
 
-    if (!token) return
-    let cancelled = false
+    async function bootstrap() {
+      dispatch({ type: "BOOTSTRAP_START" });
 
-    getMe()
-      .then(data => {
-        if (!cancelled && data) {
-          setUser(data)
-        }
-      })
-      .catch(err => {
-        console.error('[AUTH] Failed to fetch user:', err.message)
-        if (!cancelled) {
+      const token = authService.getToken?.() || localStorage.getItem("token");
+      if (!token) {
+        if (!cancelled) dispatch({ type: "BOOTSTRAP_ANON" });
+        return;
+      }
 
-          logoutApi()
-          setToken(null)
-          setUser(null)
-        }
-      })
-      .finally(() => {
-        if (!cancelled) setLoading(false)
-      })
-    return () => { cancelled = true }
-  }, [token])
-
-  const login = useCallback(async (username, password) => {
-    const data = await loginApi(username, password)
-    setToken(data.accessToken)
-    const userData = {
-      id: data.id,
-      username: data.username,
-      email: data.email,
-      firstName: data.firstName,
-      lastName: data.lastName,
+      try {
+        const user = await authService.getCurrentUser(token);
+        if (!cancelled) dispatch({ type: "BOOTSTRAP_SUCCESS", payload: { user, token } });
+      } catch {
+        authService.logout();
+        if (!cancelled) dispatch({ type: "BOOTSTRAP_ANON" });
+      }
     }
-    setUser(userData)
-    // Save to localStorage for persistence
-    localStorage.setItem('user', JSON.stringify(userData))
-    return data
-  }, [])
 
-  const register = useCallback(async (userData) => {
-    const data = await registerApi(userData)
-    return data
-  }, [])
+    bootstrap();
+    return () => {
+      cancelled = true;
+    };
+  }, []);
 
-  const refreshMe = useCallback(async () => {
-    const data = await getMe()
-    if (data) {
-      setUser(data)
-      // Update localStorage
-      localStorage.setItem('user', JSON.stringify(data))
+  const login = useCallback(async (credentials) => {
+    dispatch({ type: "LOGIN_START" });
+    try {
+      const { token, user } = await authService.login(credentials);
+      dispatch({ type: "LOGIN_SUCCESS", payload: { token, user } });
+      return { ok: true };
+    } catch (e) {
+      const message = e?.message || "Login failed";
+      dispatch({ type: "LOGIN_ERROR", payload: message });
+      return { ok: false, error: message };
     }
-    return data
-  }, [])
+  }, []);
 
   const logout = useCallback(() => {
-    logoutApi()
-    setToken(null)
-    setUser(null)
-  }, [])
+    authService.logout();
+    dispatch({ type: "LOGOUT" });
+  }, []);
 
-  const value = { token, user, isAuthenticated, loading, login, register, refreshMe, logout, setUser }
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>
+  const value = useMemo(
+    () => ({
+      user: state.user,
+      token: state.token,
+      isAuthenticated: state.isAuthenticated,
+      loading: state.loading,
+      error: state.error,
+      login,
+      logout,
+    }),
+    [state, login, logout]
+  );
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 }
