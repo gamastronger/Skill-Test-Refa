@@ -19,10 +19,9 @@ export default function Login() {
     try {
       setLoading(true);
       setError(null);
-      await login(form);
-      const token = localStorage.getItem("token");
-      if (!token) throw new Error("Token not saved");
-      navigate("/users");
+      const res = await login(form);
+      if (!res.ok) throw new Error(res.error || "Login failed");
+      navigate("/");
     } catch (err) {
       setError(err.message || "Login failed");
     } finally {

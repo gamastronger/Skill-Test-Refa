@@ -41,7 +41,9 @@ export async function login({ username, password }) {
   const token = data?.token || data?.accessToken;
   if (token) setToken(token);
 
-  return data;
+  // Fetch full user data from /auth/me after login
+  const user = await getCurrentUser();
+  return { token, user };
 }
 
 export function logout() {

@@ -13,7 +13,9 @@
   function writeStore(store) {
     try {
       localStorage.setItem(LS_KEY, JSON.stringify(store));
-    } catch {}
+    } catch {
+      // b
+    }
   }
   function deepMergeUser(base, patch) {
     const next = { ...base, ...patch };
