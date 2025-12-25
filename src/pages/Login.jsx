@@ -21,7 +21,7 @@ export default function Login() {
       setError(null);
       const res = await login(form);
       if (!res.ok) throw new Error(res.error || "Login failed");
-      navigate("/");
+      navigate("/users");
     } catch (err) {
       setError(err.message || "Login failed");
     } finally {
