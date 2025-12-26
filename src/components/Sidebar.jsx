@@ -76,7 +76,6 @@ export default function Sidebar({ open, onClose }) {
         <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px]" />
       </div>
 
-      {/* Sidebar */}
       <aside
         className={cx(
           "fixed inset-y-0 left-0 z-50 w-72 bg-white border-r border-slate-200 flex flex-col",
@@ -85,7 +84,6 @@ export default function Sidebar({ open, onClose }) {
           open ? "translate-x-0" : "-translate-x-full lg:translate-x-0"
         )}
       >
-        {/* Brand */}
         <div className="h-16 flex items-center justify-between px-4 border-b border-slate-200">
           <div className="flex items-center gap-3">
             <div className="grid h-10 w-10 place-items-center rounded-2xl bg-white ring-1 ring-[#072227]/10 shadow-sm">
@@ -99,7 +97,6 @@ export default function Sidebar({ open, onClose }) {
             </div>
           </div>
 
-          {/* Close button on mobile */}
           <button
             type="button"
             onClick={onClose}
@@ -110,7 +107,6 @@ export default function Sidebar({ open, onClose }) {
           </button>
         </div>
 
-        {/* Nav */}
         <div className="px-3 py-4">
           <p className="px-3 text-[11px] font-semibold tracking-wider text-slate-500 uppercase">
             Menu

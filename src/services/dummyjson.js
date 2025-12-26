@@ -12,9 +12,7 @@
   function writeStore(store) {
     try {
       localStorage.setItem(LS_KEY, JSON.stringify(store));
-    } catch {
-      // buat tes
-    }
+    } catch {}
   }
   function deepMergeUser(base, patch) {
     const next = { ...base, ...patch };
@@ -28,12 +26,10 @@
   }
   function applyOverlaysToList(users) {
     const store = readStore();
-    // merge patches
     const merged = (users || []).map((u) => {
       const p = store.patches[u.id];
       return p ? deepMergeUser(u, p) : u;
     });
-    // append created
     const createdList = Object.values(store.created);
     const filtered = merged.filter((u) => !store.deleted.includes(u.id));
     return [...createdList, ...filtered];
@@ -61,10 +57,8 @@
   }
   function markLocalDeleted(id) {
     const store = readStore();
-    // remove if created locally
     if (store.created[id]) delete store.created[id];
     if (!store.deleted.includes(id)) store.deleted.push(id);
-    // also clear patches
     if (store.patches[id]) delete store.patches[id];
     writeStore(store);
   }
@@ -85,7 +79,6 @@
       .get(`/users/${id}`)
       .then((user) => applyOverlaysToUser(user))
       .catch((err) => {
-        // If the user is marked deleted locally, surface that
         const store = readStore();
         if (store.deleted.includes(Number(id)) || store.deleted.includes(id)) {
           throw new Error("User not found (deleted)");
@@ -94,40 +87,29 @@
       });
   }
 
-  // Create a new user
   export function createUser(payload) {
-    // DummyJSON accepts arbitrary fields; ensure nested objects are passed through
-    // e.g., { firstName, lastName, email, phone, address: {...}, company: {...} }
     if (!payload || typeof payload !== "object") throw new Error("Payload is required");
-    // Best-effort remote create (with local token)
     const remote = api.post(`/users/add`, payload, { auth: true }).catch(() => null);
-    // Always create locally to ensure immediate UX
     const id = Date.now();
     const created = { id, image: "https://dummyjson.com/icon/512x512.png", ...payload };
     addLocalCreated(created);
-    // Prefer remote response if available
     return remote.then((res) => res || created);
   }
 
-  // Update an existing user (supports nested address & company)
   export function updateUser(id, updates) {
     if (!id) throw new Error("User id is required");
     if (!updates || typeof updates !== "object") throw new Error("Updates object is required");
-    // DummyJSON supports PUT/PATCH; use PUT for full updates
     addLocalPatch(id, updates);
     const local = getLocalCreated(id);
-    const base = local ? local : {}; // will be merged by fetchUserById/use
+    const base = local || {};
     const merged = deepMergeUser(base, updates);
-    // Best-effort remote update
     api.put(`/users/${id}`, updates, { auth: true }).catch(() => null);
     return Promise.resolve({ id, ...merged });
   }
 
-  // Delete a user
   export function deleteUser(id) {
     if (!id) throw new Error("User id is required");
     markLocalDeleted(id);
-    // Best-effort remote delete
     return api.del(`/users/${id}`, { auth: true }).catch(() => ({ id }));
   }
 

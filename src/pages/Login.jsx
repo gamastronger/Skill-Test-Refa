@@ -54,8 +54,6 @@ export default function Login() {
           </p>
         </div>
 
-        {/* Akun Dummy */}
-
         <div className="mb-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-500 text-sm px-4 py-2 text-left">
           <div className="font-semibold mb-1 text-slate-500">Dummy Account</div>
           <div>Username: emilys</div>

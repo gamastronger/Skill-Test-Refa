@@ -134,10 +134,8 @@ export default function Users() {
           <div className="h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
         </div>
 
-        {/* Filters */}
         <UserFilters query={query} onQueryChange={setQuery} total={users.length} />
 
-        {/* Create Form */}
         {creating && (
           <div className="rounded-2xl bg-white ring-1 ring-black/5 shadow-sm overflow-hidden">
             <div className="px-6 py-5 border-b border-slate-100">
@@ -169,7 +167,6 @@ export default function Users() {
           </div>
         )}
 
-        {/* Users List */}
         <UserList
           users={pagedUsers}
           onDelete={async (u) => {
@@ -183,7 +180,6 @@ export default function Users() {
           }}
         />
 
-        {/* Pagination */}
         <div className="flex justify-center gap-2 mt-4">
           {Array.from({ length: totalPages }, (_, i) => (
             <button

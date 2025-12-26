@@ -56,7 +56,6 @@ function Button({ as = "button", variant = "secondary", className, ...props }) {
   return <Comp className={cx(base, styles[variant], className)} {...props} />;
 }
 
-// helper: file -> dataURL
 function fileToDataUrl(file) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
@@ -73,8 +72,7 @@ export default function Home() {
 
   const [editing, setEditing] = useState(false);
 
-  // photo upload state
-  const [photoPreview, setPhotoPreview] = useState(null); // dataURL
+  const [photoPreview, setPhotoPreview] = useState(null);
   const [photoError, setPhotoError] = useState(null);
 
 
