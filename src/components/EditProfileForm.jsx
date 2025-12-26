@@ -190,7 +190,7 @@ export default function EditProfileForm({ user, onSave, onCancel }) {
           className={
             "inline-flex items-center justify-center rounded-xl px-4 py-2.5 text-sm font-medium transition " +
             "focus:outline-none focus-visible:ring-4 disabled:opacity-50 disabled:cursor-not-allowed " +
-            "bg-slate-900 text-white shadow-sm hover:bg-slate-800 focus-visible:ring-slate-900/15"
+            "bg-[#1C4D8D] text-white shadow-sm hover:bg-[#0F2854] focus-visible:ring-emerald-600/15"
           }
         >
           Save

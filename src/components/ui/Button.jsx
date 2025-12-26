@@ -12,7 +12,7 @@ export default function Button({ as = "button", variant = "secondary", className
     secondary: "text-slate-700 ring-1 ring-slate-200 hover:bg-slate-50 focus-visible:ring-slate-900/10",
     success: "bg-[#1C4D8D] text-white shadow-sm hover:bg-[#0F2854] focus-visible:ring-emerald-600/15",
     danger: "bg-red-600 text-white shadow-sm hover:bg-red-700 focus-visible:ring-red-600/15",
-    ghost: "text-slate-700 hover:bg-slate-100/70 focus-visible:ring-slate-900/10",
+    ghost: "text-slate-800 hover:bg-primary-200/30 focus-visible:ring-primary-500/10",
   };
 
   const Comp = as;
