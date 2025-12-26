@@ -16,6 +16,7 @@ export default function Login() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    
     try {
       setLoading(true);
       setError(null);
@@ -36,7 +37,7 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-slate-50 px-4 py-10 grid place-items-center">
       <div className="w-full max-w-md">
-        {/* Brand / Header */}
+
         <div className="mb-6 text-center">
           <div className="mb-4 grid h-12 w-12 place-items-center rounded-2xl bg-white shadow-sm ring-1 ring-slate-900/10 mx-auto">
             <img
@@ -53,10 +54,17 @@ export default function Login() {
           </p>
         </div>
 
-        {/* Card */}
+        {/* Akun Dummy */}
+
+        <div className="mb-4 rounded-xl bg-slate-100 border border-slate-200 text-slate-500 text-sm px-4 py-2 text-left">
+          <div className="font-semibold mb-1 text-slate-500">Dummy Account</div>
+          <div>Username: emilys</div>
+          <div>Password: emilyspass</div>
+        </div>
+
         <div className="rounded-2xl bg-white ring-1 ring-black/5 shadow-sm overflow-hidden">
           <form className="p-6 space-y-4" onSubmit={handleSubmit}>
-            {/* Username */}
+
             <div>
               <label className="block text-sm font-medium text-slate-700">
                 Username
@@ -75,7 +83,7 @@ export default function Login() {
               />
             </div>
 
-            {/* Password */}
+
             <div>
               <label className="block text-sm font-medium text-slate-700">
                 Password
@@ -95,14 +103,12 @@ export default function Login() {
               />
             </div>
 
-            {/* Error */}
             {error && (
               <div className="rounded-xl border border-red-200 bg-red-50 px-3 py-2 text-sm text-red-700">
                 {error}
               </div>
             )}
 
-            {/* Submit */}
             <button
               type="submit"
               disabled={loading || !form.username || !form.password}
@@ -121,7 +127,6 @@ export default function Login() {
               )}
             </button>
 
-            {/* Small footer text */}
             <p className="pt-2 text-center text-xs text-slate-500">
               By continuing, you agree to our{" "}
               <span className="text-slate-700">Terms</span> and{" "}
@@ -129,10 +134,8 @@ export default function Login() {
             </p>
           </form>
 
-          {/* subtle divider */}
           <div className="h-px bg-gradient-to-r from-transparent via-slate-200 to-transparent" />
 
-          {/* Optional bottom area */}
           <div className="p-4 text-center">
             <button
               type="button"

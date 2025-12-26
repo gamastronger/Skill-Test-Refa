@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
+import MainLayout from "./layouts/MainLayout";
 import Home from "./pages/Home";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
@@ -9,23 +9,23 @@ import ProtectedRoute from "./features/auth/ProtectedRoute";
 
 export default function App() {
   return (
-    <div className="min-h-screen p-6">
-      <Navbar />
+    <Routes>
+      {/* Public routes without sidebar */}
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
 
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-
-        <Route element={<ProtectedRoute />}>
+      {/* Protected routes with sidebar */}
+      <Route element={<ProtectedRoute />}>
+        <Route element={<MainLayout />}>
+          <Route path="/" element={<Home />} />
           <Route path="/users" element={<Users />} />
           <Route path="/users/:id" element={<UserProfile />} />
           <Route path="/profile" element={<UserProfile />} />
         </Route>
+      </Route>
 
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </div>
+      <Route path="*" element={<NotFound />} />
+    </Routes>
   );
 }
 
